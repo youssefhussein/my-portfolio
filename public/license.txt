@@ -1,0 +1,11 @@
+Model Information:
+* title:	Luffy's Hat (Straw Hat)
+* source:	https://sketchfab.com/3d-models/luffys-hat-straw-hat-b809899671d043d3bbe76d0505ab1d88
+* author:	WalidEH (https://sketchfab.com/WalidEH)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Luffy's Hat (Straw Hat)" (https://sketchfab.com/3d-models/luffys-hat-straw-hat-b809899671d043d3bbe76d0505ab1d88) by WalidEH (https://sketchfab.com/WalidEH) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
