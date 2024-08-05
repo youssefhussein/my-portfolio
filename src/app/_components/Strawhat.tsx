@@ -6,36 +6,69 @@ License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 Source: https://sketchfab.com/3d-models/luffys-hat-straw-hat-b809899671d043d3bbe76d0505ab1d88
 Title: Luffy's Hat (Straw Hat)
 */
-
-import * as THREE from 'three'
-import React from 'react'
-import { useGLTF } from '@react-three/drei'
-import { GLTF } from 'three-stdlib'
+"use client";
+import * as THREE from "three";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import { useGLTF, Wireframe } from "@react-three/drei";
+import { GLTF } from "three-stdlib";
+import { useFrame } from "@react-three/fiber";
+import { cameraNear } from "three/webgpu";
 
 type GLTFResult = GLTF & {
   nodes: {
-    red_thing_Material001_0: THREE.Mesh
-    Straw_Hat_Material002_0: THREE.Mesh
-  }
+    red_thing_Material001_0: THREE.Mesh;
+    Straw_Hat_Material002_0: THREE.Mesh;
+  };
   materials: {
-    ['Material.001']: THREE.MeshStandardMaterial
-    ['Material.002']: THREE.MeshStandardMaterial
-  }
-  animations: GLTFAction[]
-}
+    ["Material.001"]: THREE.MeshStandardMaterial;
+    ["Material.002"]: THREE.MeshStandardMaterial;
+  };
+  //animations: GLTFAction[]
+};
 
-export function StrawHat(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/scene.gltf')  as GLTFResult
+export const StrawHat = forwardRef(function StrawHat(
+  props: JSX.IntrinsicElements["group"],
+  myref,
+) {
+  const { nodes, materials } = useGLTF("/scene.gltf") as GLTFResult;
+  const model = useRef<THREE.Group | null>();
+
+  useFrame((state, delta) => {
+    if (model.current) {
+      const sinMethod = Math.sin(state.clock.getElapsedTime()) * 0.01;
+
+      model.current.rotation.y += 3.0;
+    }
+  });
+
+  //access the model from parent
+  useImperativeHandle(myref, () => ({
+    getModel() {
+      return model.current;
+    },
+  }));
+
   return (
-    <group {...props} dispose={null}>
-      <group scale={0.01}>
-        <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-          <mesh geometry={nodes.Straw_Hat_Material002_0.geometry} material={materials['Material.002']} />
-          <mesh geometry={nodes.red_thing_Material001_0.geometry} material={materials['Material.001']} position={[-0.003, 0, 0.063]} scale={[1, 1, 1.76]} />
+    
+      <group {...props} dispose={null} ref={model}>
+        <group scale={0.01}>
+          <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
+            <mesh
+              geometry={nodes.Straw_Hat_Material002_0.geometry}
+              material={materials["Material.002"]}
+              
+            ><Wireframe  /></mesh>
+            <mesh
+              geometry={nodes.red_thing_Material001_0.geometry}
+              material={materials["Material.001"]}
+              position={[-0.003, 0, 0.063]}
+              scale={[1, 1, 1.76]}
+            />
+          </group>
         </group>
       </group>
-    </group>
-  )
-}
+   
+  );
+});
 
-useGLTF.preload('/scene.gltf')
+useGLTF.preload("/scene.gltf");
